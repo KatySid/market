@@ -30,5 +30,18 @@ public class ProductController {
         return productService.save(product);
     }
 
+    @PutMapping
+    public Product updateProduct (@RequestBody Product product){
+        return productService.updateProduct(product);
+    }
 
+    @DeleteMapping
+    public void deleteAll(){
+        productService.deleteAll();
+    }
+
+    @DeleteMapping ("/{id}")
+    public Product deleteById(@PathVariable Long id) {
+        return productService.deleteById(id);
+    }
 }
