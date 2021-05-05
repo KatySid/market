@@ -31,6 +31,12 @@ public class CartController {
         cart.getItems().add(productService.findById(id).get());
     }
 
+    @GetMapping("/delete")
+    public void deleteProduct(@RequestParam Long id) {
+        log.info("delete product: " + id);
+        cart.getItems().remove(productService.findById(id).get());
+    }
+
     @GetMapping
     public List<Product> getAll(){
         return cart.getItems();

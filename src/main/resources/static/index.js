@@ -23,37 +23,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
             });
     };
 
-    $scope.clickOnProduct = function (product) {
-        console.log(product);
-    }
-
-    $scope.pingProduct = function (productId) {
-        $http({
-            url: contextPath + '/api/v1/cart/ping',
-            method: 'GET',
-            params: {
-                id: productId,
-                temp: 'empty'
-            }
-        }).then(function (response) {
-            console.log("OK");
-        });
-    }
-    $scope.addToCart = function (product) {
-        $http({
-            url: contextPath + '/api/v1/cart/add',
-            method: 'POST',
-            params: {
-                id: product.id,
-                title: product.title,
-                price: product.price,
-                temp: 'empty'
-            }
-        }).then(function (response) {
-            console.log("OK");
-        });
-    }
-    $scope.addProductToCart = function (productId) {
+   $scope.addProductToCart = function (productId) {
             $http({
                 url: contextPath + '/api/v1/cart/add',
                 method: 'GET',
@@ -67,6 +37,19 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
             });
         }
 
+    $scope.deleteProduct = function (productId) {
+            $http({
+                url: contextPath + '/api/v1/cart/delete/',
+                method: 'GET',
+                params: {
+                    id: productId,
+                    temp: 'empty'
+                }
+            }).then(function (response) {
+                console.log("OK");
+                location.reload();
+            });
+        }
      $scope.clearCart = function (){
       $http({
                  url: contextPath + '/api/v1/cart/clear',
@@ -76,7 +59,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
                  }
              }).then(function (response) {
                  console.log("OK");
-                  location.reload();
+                 location.reload();
              });}
     $scope.init();
 });

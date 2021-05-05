@@ -32,8 +32,6 @@
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
             <td>
-                <button class="btn btn-danger" ng-click="clickOnProduct(p)">Console info??</button>
-                <button class="btn btn-danger" ng-click="pingProduct(p.id)">Ping</button>
                 <button class="btn btn-primary" ng-click="addProductToCart(p.id)">В Корзину</button>
             </td>
         </tr>
@@ -68,6 +66,9 @@
             <td>{{p.id}}</td>
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
+            <td>
+                <button class="btn btn-danger" ng-click="deleteProduct(p.id)">Удалить из корзины</button>
+            </td>
         </tr>
         </tbody>
     </table>
