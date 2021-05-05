@@ -6,6 +6,10 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
             .then(function (response) {
                 $scope.products = response.data;
             });
+        $http.get(contextPath + '/api/v1/cart')
+                        .then(function (response) {
+                            $scope.cart = response.data;
+                        });
     };
 
     $scope.createNewProduct = function () {
@@ -35,6 +39,44 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
             console.log("OK");
         });
     }
+    $scope.addToCart = function (product) {
+        $http({
+            url: contextPath + '/api/v1/cart/add',
+            method: 'POST',
+            params: {
+                id: product.id,
+                title: product.title,
+                price: product.price,
+                temp: 'empty'
+            }
+        }).then(function (response) {
+            console.log("OK");
+        });
+    }
+    $scope.addProductToCart = function (productId) {
+            $http({
+                url: contextPath + '/api/v1/cart/add',
+                method: 'GET',
+                params: {
+                    id: productId,
+                    temp: 'empty'
+                }
+            }).then(function (response) {
+                console.log("OK");
+                location.reload();
+            });
+        }
 
+     $scope.clearCart = function (){
+      $http({
+                 url: contextPath + '/api/v1/cart/clear',
+                 method: 'GET',
+                 params: {
+                     temp: 'empty'
+                 }
+             }).then(function (response) {
+                 console.log("OK");
+                  location.reload();
+             });}
     $scope.init();
 });

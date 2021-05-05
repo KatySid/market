@@ -34,6 +34,7 @@
             <td>
                 <button class="btn btn-danger" ng-click="clickOnProduct(p)">Console info??</button>
                 <button class="btn btn-danger" ng-click="pingProduct(p.id)">Ping</button>
+                <button class="btn btn-primary" ng-click="addProductToCart(p.id)">В Корзину</button>
             </td>
         </tr>
         </tbody>
@@ -54,6 +55,23 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="p in cart">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-danger" ng-click="clearCart()">Очистить корзину</button>
 </div>
 </body>
 </html>

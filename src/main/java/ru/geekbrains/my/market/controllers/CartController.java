@@ -25,5 +25,20 @@ public class CartController {
         log.info("ping: " + id);
     }
 
+    @GetMapping("/add")
+    public void addProduct(@RequestParam Long id) {
+        log.info("add: " + id);
+        cart.getItems().add(productService.findById(id).get());
+    }
+
+    @GetMapping
+    public List<Product> getAll(){
+        return cart.getItems();
+    }
+    @GetMapping("/clear")
+    public void clearCart() {
+        log.info("clear cart");
+        cart.getItems().clear();
+    }
 
 }
