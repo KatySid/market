@@ -14,13 +14,11 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    @ResponseBody
     public List<Product> getAll(){
         return productService.findAll();
     }
 
     @GetMapping ("/{id}")
-    @ResponseBody
     public Product getOneProductById(@PathVariable Long id){
         return productService.findById(id).get();
     }
