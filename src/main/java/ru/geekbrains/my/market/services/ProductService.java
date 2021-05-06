@@ -3,7 +3,12 @@ package ru.geekbrains.my.market.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
+import ru.geekbrains.my.market.dtos.ProductDto;
+import ru.geekbrains.my.market.error_handling.ResourceNotFoundException;
+import ru.geekbrains.my.market.models.Category;
 import ru.geekbrains.my.market.models.Product;
 import ru.geekbrains.my.market.repositories.ProductRepository;
 
@@ -14,6 +19,18 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+    private final CategoryService categoryService;
+
+    @Transactional
+    public ProductDto createNewProduct(@RequestBody ProductDto productDto) {
+        Product product = new Product();
+        product.setTitle(productDto.getTitle());
+        product.setPrice(productDto.getPrice());
+        Category category = categoryService.findByTitle(productDto.getCategoryTitle()).orElseThrow(()-> new ResourceNotFoundException("Category doesn't exist " + productDto.getCategoryTitle()));
+        product.setCategory(category);
+        productRepository.save(product);
+        return new ProductDto(product);
+    }
 
     public List<Product> findAll(){
         return productRepository.findAll();

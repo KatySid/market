@@ -4,43 +4,39 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.geekbrains.my.market.dtos.ProductDto;
 import ru.geekbrains.my.market.error_handling.MarketError;
+import ru.geekbrains.my.market.error_handling.ResourceNotFoundException;
+import ru.geekbrains.my.market.models.Category;
 import ru.geekbrains.my.market.models.Product;
+import ru.geekbrains.my.market.services.CategoryService;
 import ru.geekbrains.my.market.services.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping ("/api/v1/products")
 public class ProductController {
     private final ProductService productService;
+    private final CategoryService categoryService;
 
     @GetMapping
-    public List<Product> getAll(){
-        return productService.findAll();
+    public List<ProductDto> getAll(){
+        return productService.findAll().stream().map(ProductDto :: new).collect(Collectors.toList());
     }
 
     @GetMapping ("/{id}")
-    public Product getOneProductById(@PathVariable Long id){
-        return productService.findById(id).get();
+    public ProductDto getOneProductById(@PathVariable Long id){
+        Product product = productService.findById(id).orElseThrow(()-> new ResourceNotFoundException("Product doesn't exist " + id));
+        return new ProductDto(product);
     }
 
     @PostMapping
-    public ResponseEntity<?> createNewProduct(@RequestBody Product product) {
-        List<String> errors = new ArrayList<>();
-        if (product.getTitle().length() < 3) {
-            errors.add("Too short title");
-        }
-        if (product.getPrice() < 1) {
-            errors.add("Invalid product price");
-        }
-        if (errors.size() > 0) {
-            return new ResponseEntity<>(new MarketError(HttpStatus.BAD_REQUEST.value(), errors), HttpStatus.BAD_REQUEST);
-        }
-        Product out = productService.save(product);
-        return new ResponseEntity<>(out, HttpStatus.CREATED);
+    public ProductDto createNewProduct(@RequestBody ProductDto productDto) {
+        return productService.createNewProduct(productDto);
     }
 
     @PutMapping

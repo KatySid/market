@@ -2,6 +2,7 @@ package ru.geekbrains.my.market.utils;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;
+import ru.geekbrains.my.market.dtos.ProductDto;
 import ru.geekbrains.my.market.models.Product;
 
 import javax.annotation.PostConstruct;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Component
 public class Cart {
-    private List<Product> items;
+    private List<ProductDto> items;
 
     @PostConstruct
     public void init(){
@@ -19,11 +20,11 @@ public class Cart {
 
     }
 
-    public void addProductToCart(Product product){
+    public void addProductToCart(ProductDto product){
         items.add(product);
     }
 
-    public void deleteProduct (Product product){
+    public void deleteProduct (ProductDto product){
         items.remove(product);
     }
 
@@ -31,7 +32,7 @@ public class Cart {
         items.clear();
     }
 
-    public List<Product> getAllItems(){
+    public List<ProductDto> getAllItems(){
         return Collections.unmodifiableList(items);
     }
 }

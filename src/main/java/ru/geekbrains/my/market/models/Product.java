@@ -1,28 +1,34 @@
 package ru.geekbrains.my.market.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
-@Table (name = "products")
-@NoArgsConstructor
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "products")
 public class Product {
     @Id
-    @Column (name = "id")
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @Column (name = "title")
+    @Column(name = "title")
     private String title;
 
-    @Column (name = "price")
+    @Column(name = "price")
     private int price;
 
-    public Product(String title, int price) {
-        this.title = title;
-        this.price = price;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @Override
+    public String toString() {
+        return String.format("Product [id = %d, title = %s, price = %d, category = %s]", id, title, price, category.getTitle());
     }
 }
