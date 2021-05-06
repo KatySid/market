@@ -20,31 +20,26 @@ public class CartController {
     private final ProductService productService;
 
 
-    @GetMapping("/ping")
-    public void ping(@RequestParam Long id) {
-        log.info("ping: " + id);
-    }
-
     @GetMapping("/add")
     public void addProduct(@RequestParam Long id) {
         log.info("add: " + id);
-        cart.getItems().add(productService.findById(id).get());
+        cart.addProductToCart(productService.findById(id).get());
     }
 
     @GetMapping("/delete")
     public void deleteProduct(@RequestParam Long id) {
         log.info("delete product: " + id);
-        cart.getItems().remove(productService.findById(id).get());
+        cart.deleteProduct(productService.findById(id).get());
     }
 
     @GetMapping
     public List<Product> getAll(){
-        return cart.getItems();
+        return cart.getAllItems();
     }
     @GetMapping("/clear")
     public void clearCart() {
         log.info("clear cart");
-        cart.getItems().clear();
+        cart.clear();
     }
 
 }
