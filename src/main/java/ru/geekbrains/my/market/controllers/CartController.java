@@ -4,8 +4,8 @@ package ru.geekbrains.my.market.controllers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import ru.geekbrains.my.market.dtos.CartDto;
 import ru.geekbrains.my.market.dtos.ProductDto;
-import ru.geekbrains.my.market.models.Product;
 import ru.geekbrains.my.market.services.ProductService;
 import ru.geekbrains.my.market.utils.Cart;
 
@@ -24,19 +24,20 @@ public class CartController {
     @GetMapping("/add")
     public void addProduct(@RequestParam Long id) {
         log.info("add: " + id);
-        cart.addProductToCart(new ProductDto(productService.findById(id).get()));
+        cart.addProductToCart(productService.findById(id).get());
     }
 
     @GetMapping("/delete")
     public void deleteProduct(@RequestParam Long id) {
         log.info("delete product: " + id);
-        cart.deleteProduct(new ProductDto(productService.findById(id).get()));
+        cart.deleteProduct(productService.findById(id).get());
+
     }
 
     @GetMapping
     public List<ProductDto> getAll(){
-
-        return cart.getAllItems();
+        CartDto cartDto = new CartDto(cart);
+        return cartDto.getAllItems();
     }
     @GetMapping("/clear")
     public void clearCart() {
