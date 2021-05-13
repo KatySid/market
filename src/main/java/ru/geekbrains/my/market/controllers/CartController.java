@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.my.market.dtos.CartDto;
-import ru.geekbrains.my.market.dtos.ProductDto;
 import ru.geekbrains.my.market.error_handling.ResourceNotFoundException;
 import ru.geekbrains.my.market.services.ProductService;
 import ru.geekbrains.my.market.utils.Cart;
@@ -36,9 +35,9 @@ public class CartController {
     }
 
     @GetMapping
-    public List<ProductDto> getAll(){
-        CartDto cartDto = new CartDto(cart);
-        return cartDto.getAllItems();
+    public CartDto getAll(){
+        return  new CartDto(cart);
+
     }
     @GetMapping("/clear")
     public void clearCart() {

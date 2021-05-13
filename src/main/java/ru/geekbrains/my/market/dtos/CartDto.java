@@ -1,6 +1,4 @@
 package ru.geekbrains.my.market.dtos;
-
-import org.springframework.stereotype.Component;
 import ru.geekbrains.my.market.utils.Cart;
 
 import javax.annotation.PostConstruct;
@@ -9,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
 public class CartDto {
     private List<ProductDto> items;
 
@@ -23,7 +20,7 @@ public class CartDto {
         this.items = cart.getAllItems().stream().map(ProductDto :: new).collect(Collectors.toList());
     }
 
-    public List<ProductDto> getAllItems(){
+    public List<ProductDto> getItems(){
         return Collections.unmodifiableList(items);
     }
 }

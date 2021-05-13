@@ -69,13 +69,13 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="p in cart">
-            <td>{{p.id}}</td>
-            <td>{{p.title}}</td>
-            <td>{{p.price}}</td>
-            <td>{{p.categoryTitle}}</td>
+        <tr ng-repeat="item in cartDto.items">
+            <td>{{item.id}}</td>
+            <td>{{item.title}}</td>
+            <td>{{item.price}}</td>
+            <td>{{item.categoryTitle}}</td>
             <td>
-                <button class="btn btn-danger" ng-click="deleteProduct(p.id)">Удалить из корзины</button>
+                <button class="btn btn-danger" ng-click="deleteProduct(item.id)">Удалить из корзины</button>
             </td>
         </tr>
         </tbody>

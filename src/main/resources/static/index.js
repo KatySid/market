@@ -8,7 +8,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
             });
         $http.get(contextPath + '/api/v1/cart')
                         .then(function (response) {
-                            $scope.cart = response.data;
+                            $scope.cartDto = response.data;
                         });
     };
 
