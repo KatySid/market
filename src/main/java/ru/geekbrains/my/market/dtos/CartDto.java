@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CartDto {
-    private List<ProductDto> items;
+    private List<OrderItemDto> items;
 
     @PostConstruct
     public void init(){
@@ -17,10 +17,10 @@ public class CartDto {
     }
 
     public CartDto (Cart cart){
-        this.items = cart.getAllItems().stream().map(ProductDto :: new).collect(Collectors.toList());
+        this.items = cart.getAllItems().stream().map(OrderItemDto :: new).collect(Collectors.toList());
     }
 
-    public List<ProductDto> getItems(){
+    public List<OrderItemDto> getItems(){
         return Collections.unmodifiableList(items);
     }
 }

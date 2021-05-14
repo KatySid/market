@@ -24,15 +24,20 @@ public class CartController {
     @GetMapping("/add")
     public void addProduct(@RequestParam Long id) {
         log.info("add: " + id);
-        cart.addProductToCart(productService.findById(id).orElseThrow(()-> new ResourceNotFoundException("Product doesn't exist " + id)));
+        cart.addProductToCart(id);
     }
 
-    @GetMapping("/delete")
-    public void deleteProduct(@RequestParam Long id) {
-        log.info("delete product: " + id);
-        cart.deleteProduct(productService.findById(id).orElseThrow(()-> new ResourceNotFoundException("Product doesn't exist " + id)));
-
+    @GetMapping("/order")
+    public void order(Cart cart) {
+        log.info("order ");
     }
+
+//    @GetMapping("/delete")
+//    public void deleteProduct(@RequestParam Long id) {
+//        log.info("delete product: " + id);
+//        cart.deleteProduct(productService.findById(id).orElseThrow(()-> new ResourceNotFoundException("Product doesn't exist " + id)));
+//
+//    }
 
     @GetMapping
     public CartDto getAll(){

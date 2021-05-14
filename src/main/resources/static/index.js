@@ -1,4 +1,4 @@
-angular.module('app', []).controller('indexController', function ($scope, $http) {
+angular.module('app', ['ngStorage']).controller('indexController', function ($scope, $http,$location, $localStorage) {
     const contextPath = 'http://localhost:8189/market';
 
     $scope.init = function () {
@@ -36,7 +36,52 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
                 console.log("OK");
             });
         }
+        $scope.order = function () {
+            $http({
+                url: contextPath + '/api/v1/cart/order',
+                method: 'GET',
+                params: {
+//                    id: productId,
+                    temp: 'empty'
+                }
+            }).then(function (response) {
+                $scope.init();
+                console.log("OK");
+            });
+        }
+    $scope.tryToAuth = function () {
+           $http.post(contextPath + '/auth', $scope.user)
+               .then(function successCallback(response) {
+                   if (response.data.token) {
+                       $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
+                       $localStorage.aprilMarketCurrentUser = {username: $scope.user.username, token: response.data.token};
 
+                       $scope.user.username = null;
+                       $scope.user.password = null;
+
+                       $scope.whoAmI();
+                   }
+               }, function errorCallback(response) {
+               });
+       };
+
+    $scope.tryToLogout = function () {
+            $scope.clearUser();
+        };
+
+        $scope.clearUser = function () {
+                delete $localStorage.aprilMarketCurrentUser;
+                $http.defaults.headers.common.Authorization = '';
+            };
+
+
+    $scope.isUserLoggedIn = function () {
+        if ($localStorage.aprilMarketCurrentUser) {
+            return true;
+        } else {
+            return false;
+        }
+        };
     $scope.deleteProduct = function (productId) {
             $http({
                 url: contextPath + '/api/v1/cart/delete/',
@@ -61,5 +106,17 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
                  $scope.init();
                  console.log("OK");
              });}
+
+             $scope.whoAmI = function () {
+                     $http({
+                         url: contextPath + '/api/v1/users/me',
+                         method: 'GET'
+                     }).then(function (response) {
+                         $scope.userDto=response.data;
+                     });
+                 };
+//   if ($localStorage.aprilMarketCurrentUser) {
+//                     $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.aprilMarketCurrentUser.token;
+//                 }
     $scope.init();
 });
