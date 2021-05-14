@@ -24,7 +24,16 @@ public class Cart {
     }
 
     public void deleteProduct (Product product){
-        items.remove(product);
+        Product p = null;
+        for (int i = 0; i < items.size(); i++) {
+            if(product.getId()==items.get(i).getId()){
+                p=items.get(i);
+                break;
+            }
+        }
+        if(p!=null){
+            items.remove(p);
+        }
     }
 
     public void clear () {

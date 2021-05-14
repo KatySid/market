@@ -8,7 +8,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
             });
         $http.get(contextPath + '/api/v1/cart')
                         .then(function (response) {
-                            $scope.cart = response.data;
+                            $scope.cartDto = response.data;
                         });
     };
 
@@ -32,8 +32,8 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
                     temp: 'empty'
                 }
             }).then(function (response) {
+                $scope.init();
                 console.log("OK");
-                location.reload();
             });
         }
 
@@ -46,9 +46,9 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
                     temp: 'empty'
                 }
             }).then(function (response) {
+                 $scope.init();
                 console.log("OK");
-                location.reload();
-            });
+                });
         }
      $scope.clearCart = function (){
       $http({
@@ -58,8 +58,8 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
                      temp: 'empty'
                  }
              }).then(function (response) {
+                 $scope.init();
                  console.log("OK");
-                 location.reload();
              });}
     $scope.init();
 });

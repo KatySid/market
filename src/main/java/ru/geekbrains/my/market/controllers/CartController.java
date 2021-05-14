@@ -4,7 +4,8 @@ package ru.geekbrains.my.market.controllers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import ru.geekbrains.my.market.models.Product;
+import ru.geekbrains.my.market.dtos.CartDto;
+import ru.geekbrains.my.market.error_handling.ResourceNotFoundException;
 import ru.geekbrains.my.market.services.ProductService;
 import ru.geekbrains.my.market.utils.Cart;
 
@@ -23,18 +24,20 @@ public class CartController {
     @GetMapping("/add")
     public void addProduct(@RequestParam Long id) {
         log.info("add: " + id);
-        cart.addProductToCart(productService.findById(id).get());
+        cart.addProductToCart(productService.findById(id).orElseThrow(()-> new ResourceNotFoundException("Product doesn't exist " + id)));
     }
 
     @GetMapping("/delete")
     public void deleteProduct(@RequestParam Long id) {
         log.info("delete product: " + id);
-        cart.deleteProduct(productService.findById(id).get());
+        cart.deleteProduct(productService.findById(id).orElseThrow(()-> new ResourceNotFoundException("Product doesn't exist " + id)));
+
     }
 
     @GetMapping
-    public List<Product> getAll(){
-        return cart.getAllItems();
+    public CartDto getAll(){
+        return  new CartDto(cart);
+
     }
     @GetMapping("/clear")
     public void clearCart() {
