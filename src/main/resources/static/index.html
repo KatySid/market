@@ -41,19 +41,20 @@
                             </div>
                         </form>
                     </li>
+                    <p></p>
                     <li class="nav-item" ng-show="!isUserLoggedIn()">
                         <form class="align-middle" ng-submit="registrationUser()">
                             <div class="input-group-prepend">
                                 <input id="loginField" class="form-control" ng-model="newUser.username"
-                                       type="text"
+                                       type="text" placeholder="Имя" aria-label="Username"
                                        aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
 
                                 <input id="passwordField" class="form-control" ng-model="newUser.password"
-                                       type="password"
+                                       type="password" placeholder="Пароль" aria-label="Password"
                                        aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
 
                                 <input id="emailField" class="form-control" ng-model="newUser.email"
-                                       type="text"
+                                       type="text" placeholder="e-mail" aria-label="Email"
                                        aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
                                 <button id="loginSubmit" class="btn btn-outline-warning btn-sm"
                                         style="margin-left: 10px;" type="submit">Зарегистрироваться

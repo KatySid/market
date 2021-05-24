@@ -25,7 +25,7 @@ public class UserController {
         return new UserDto(currentUser.getUsername(), currentUser.getEmail());
     }
 
-    @PostMapping("/register") // todo заменить при решении домашнего задания
+    @PostMapping
     public void register(@RequestBody UserRegDto userRegDto) {
         userRegDto.setPassword(passwordEncoder.encode(userRegDto.getPassword())); // encode email to bcrypt
         userService.save(userRegDto);

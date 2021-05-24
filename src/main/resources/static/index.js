@@ -36,7 +36,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
                 console.log("OK");
             });
         }
-  $scope.order = function (username) {
+   $scope.order = function (username) {
             $http({
                 url: contextPath + '/api/v1/cart/order',
                 method: 'GET',
@@ -50,7 +50,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
             });
         }
 
-         $scope.showMyOrders = function () {
+   $scope.showMyOrders = function () {
                 $http({
                     url: contextPath + '/api/v1/orders',
                     method: 'GET'
@@ -59,7 +59,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
                 });
             };
 
-             $scope.loadCart = function (page) {
+   $scope.loadCart = function (page) {
                     $http({
                         url: '/market/api/v1/cart',
                         method: 'GET'
@@ -76,14 +76,14 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
                 });
             };
 
-         $scope.saveOrder = function () {
-                            $http.post(contextPath + '/api/v1/orders', $scope.newOrder).then(function successCallback(response) {
-                                console.log("Заказ сохранен")
-                                $scope.clearCart();
+   $scope.saveOrder = function () {
+                     $http.post(contextPath + '/api/v1/orders', $scope.newOrder).then(function successCallback(response){
+                     console.log("Заказ сохранен")
+                     $scope.clearCart();
                             });
                         };
 
-    $scope.tryToAuth = function () {
+   $scope.tryToAuth = function () {
            $http.post(contextPath + '/auth', $scope.user)
                .then(function successCallback(response) {
                    if (response.data.token) {
@@ -116,22 +116,9 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
             return false;
         }
         };
-//    $scope.deleteProduct = function (productId) {
-//            $http({
-//                url: contextPath + '/api/v1/cart/delete/',
-//                method: 'GET',
-//                params: {
-//                    id: productId,
-//                    temp: 'empty'
-//                }
-//            }).then(function (response) {
-//                 $scope.init();
-//                console.log("OK");
-//                });
-//        }
 
     $scope.registrationUser = function(){
-                $http.post(contextPath + '/api/v1/users/register', $scope.newUser)
+                $http.post(contextPath + '/api/v1/users', $scope.newUser)
                 .then(function successCallback(response) {
                 $scope.newUser = null;
                 }, function errorCallback(response) {
@@ -139,7 +126,6 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
                 alert('Error: ' + response.data.messages);
              });
      };
-
 
      $scope.clearCart = function (){
       $http({
@@ -153,7 +139,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
                  console.log("OK");
              });}
 
-             $scope.whoAmI = function () {
+      $scope.whoAmI = function () {
                      $http({
                          url: contextPath + '/api/v1/users/me',
                          method: 'GET'
@@ -161,8 +147,8 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
                          $scope.userDto=response.data;
                      });
                  };
-  //if ($localStorage.marketCurrentUser) {
-// $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.marketCurrentUser.token;
-// }
+    if ($localStorage.marketCurrentUser) {
+    $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.marketCurrentUser.token;
+    }
     $scope.init();
 });
