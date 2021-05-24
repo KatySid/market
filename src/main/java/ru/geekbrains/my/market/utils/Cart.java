@@ -9,6 +9,7 @@ import ru.geekbrains.my.market.models.Product;
 import ru.geekbrains.my.market.services.ProductService;
 
 import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
 public class Cart {
     private final ProductService productService;
     private List<OrderItem> items;
+    private BigDecimal sum;
 
     @PostConstruct
     public void init(){
@@ -30,31 +32,31 @@ public class Cart {
         for(OrderItem oi: items){
             if(oi.getProduct().getId().equals(id)){
                 oi.incrementQuantity();
+                recalculate();
                 return;
             }
         }
         Product product = productService.findById(id).orElseThrow(()-> new ResourceNotFoundException("Product doesn't exist " ));
         items.add(new OrderItem(product));
+        recalculate();
     }
-
-//    public void deleteProduct (Product product){
-//        Product p = null;
-//        for (int i = 0; i < items.size(); i++) {
-//            if(product.getId()==items.get(i).getId()){
-//                p=items.get(i);
-//                break;
-//            }
-//        }
-//        if(p!=null){
-//            items.remove(p);
-//        }
-//    }
 
     public void clear () {
         items.clear();
     }
 
+    private void recalculate() {
+        sum = BigDecimal.ZERO;
+        for (OrderItem oi : items) {
+            sum = sum.add(oi.getPrice());
+        }
+    }
+
     public List<OrderItem> getAllItems(){
         return Collections.unmodifiableList(items);
     }
+
+//    public void deleteProduct(Product product){
+//        items.remove(product);
+//    }
 }

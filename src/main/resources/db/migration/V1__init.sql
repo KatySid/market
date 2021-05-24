@@ -63,14 +63,27 @@ INSERT INTO products (title, price, category_id) VALUES
 ('Milk1', 80, 1),
 ('Dress1', 500, 2);
 
+
+
+create table orders (
+    id                              bigserial primary key,
+    user_id                         bigint references users (id),
+    price                           numeric (8, 2),
+    adress                          varchar(255),
+    phone_Number                     varchar(255),
+    created_at                      timestamp default current_timestamp,
+    updated_at                      timestamp default current_timestamp
+);
 CREATE TABLE order_items (
 id                                  bigserial PRIMARY KEY,
 product_id                          bigint REFERENCES products (id),
+order_id                            bigint references orders (id),
 quantity                            int,
 price_per_product                   numeric(8,2),
 price                               numeric(8,2),
+adress                              varchar(255),
+phone_Number                        varchar(255),
 created_at                          TIMESTAMP DEFAULT current_timestamp,
 updated_at                          TIMESTAMP DEFAULT current_timestamp
 );
-
 COMMIT;
