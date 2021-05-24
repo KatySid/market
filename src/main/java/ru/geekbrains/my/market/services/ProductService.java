@@ -50,7 +50,7 @@ public class ProductService {
             if(product.getTitle()!=null){
                 p.setTitle(product.getTitle());
             }
-            if (product.getPrice()!=0){
+            if (product.getPrice()!=null){
                 p.setPrice(product.getPrice());
             }
             return  productRepository.save(p);
