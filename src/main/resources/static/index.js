@@ -117,6 +117,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
         }
         };
 
+
     $scope.registrationUser = function(){
                 $http.post(contextPath + '/api/v1/users', $scope.newUser)
                 .then(function successCallback(response) {
