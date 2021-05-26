@@ -59,4 +59,14 @@ public class Cart {
 //    public void deleteProduct(Product product){
 //        items.remove(product);
 //    }
+    public void removeProductToCart (Long id) {
+        Product product = productService.findById(id).get();
+        for (OrderItem oi : items) {
+            if (oi.getProduct().equals(product)) {
+                items.remove(oi);
+                recalculate();
+                return;
+            }
+        }
+    }
 }

@@ -38,6 +38,7 @@ public class UserService implements UserDetailsService {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
+    @Transactional
     public void save (UserRegDto userRegDto){
         if (userRepository.findByEmail(userRegDto.getEmail()).isEmpty()){
             User user = new User();
