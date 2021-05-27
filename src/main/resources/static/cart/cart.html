@@ -34,6 +34,7 @@
         <input class="form-contol" ng-model="newOrder.adress" type="text" placeholder="Адрес доставки" aria-label="Adress" name="adress">
         <p></p>
         <input class="form-contol" ng-model="newOrder.phoneNumber" type="text" placeholder="Телефон" aria-label="Phone" name="phoneNumber">
+        <button ng-click="createOrder()" class="btn btn-primary" ng-show="cartDto.items.length > 0">Оформить заказ</button>
     </form>
-    <button ng-click="createOrder()" class="btn btn-primary" ng-show="cartDto.items.length > 0">Оформить заказ</button>
+
 </div>
