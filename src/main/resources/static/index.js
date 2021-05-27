@@ -94,4 +94,12 @@ angular.module('app').controller('indexController', function ($scope, $http, $lo
                     alert('Error: ' + response.data.messages);
                  });
          };
+          $scope.whoAmI = function () {
+                              $http({
+                                  url: contextPath + '/api/v1/users/me',
+                                  method: 'GET'
+                              }).then(function (response) {
+                                  $scope.userDto=response.data;
+                              });
+                          };
 });

@@ -20,5 +20,17 @@ angular.module('app').controller('orderController', function ($scope, $http, $lo
         });
     };
 
+ $scope.showMyOrders = function () {
+        $http({
+            url: contextPath + '/api/v1/orders',
+            method: 'GET'
+        }).then(function (response) {
+            $scope.myOrders = response.data;
+        });
+    };
+
+    if ($scope.isUserLoggedIn()) {
+        $scope.showMyOrders();
+    }
     $scope.loadCart();
 });

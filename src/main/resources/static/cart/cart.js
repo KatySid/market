@@ -35,6 +35,12 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
             $scope.loadCart();
         });
     };
+     $scope.saveOrder = function () {
+                         $http.post(contextPath + '/api/v1/orders', $scope.newOrder).then(function successCallback(response){
+                         console.log("Заказ сохранен")
+                         $scope.clearCart();
+                                });
+                            };
 
     $scope.loadCart();
 });
