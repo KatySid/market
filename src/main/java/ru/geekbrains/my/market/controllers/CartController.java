@@ -1,12 +1,9 @@
 package ru.geekbrains.my.market.controllers;
 
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.my.market.dtos.CartDto;
-import ru.geekbrains.my.market.services.ProductService;
-import ru.geekbrains.my.market.services.UserService;
 import ru.geekbrains.my.market.utils.Cart;
 
 @RestController
@@ -16,18 +13,16 @@ import ru.geekbrains.my.market.utils.Cart;
 
 public class CartController {
     private final Cart cart;
-    private final ProductService productService;
-    private final UserService userService;
 
 
-    @GetMapping("/add")
-    public void addProduct(@RequestParam Long id) {
+    @GetMapping("/add/{id}")
+    public void addProduct(@PathVariable Long id) {
         log.info("add: " + id);
         cart.addProductToCart(id);
     }
 
     @GetMapping
-    public CartDto getAll(){
+    public CartDto getCart(){
         return  new CartDto(cart);
     }
 

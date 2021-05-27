@@ -56,8 +56,8 @@ public class Cart {
         return Collections.unmodifiableList(items);
     }
 
-//    public void deleteProduct(Product product){
-//        items.remove(product);
+//    public void deleteProduct(Product products){
+//        items.remove(products);
 //    }
     public void removeProductToCart (Long id) {
         Product product = productService.findById(id).get();

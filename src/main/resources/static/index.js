@@ -1,113 +1,82 @@
-angular.module('app', ['ngStorage']).controller('indexController', function ($scope, $http,$location, $localStorage) {
+(function ($localStorage) {
+    'use strict';
+
+    angular
+        .module('app', ['ngRoute', 'ngStorage'])
+        .config(config)
+        .run(run);
+
+    function config($routeProvider, $httpProvider) {
+        $routeProvider
+            .when('/', {
+                templateUrl: 'home/home.html',
+                controller: 'homeController'
+            })
+            .when('/products', {
+                templateUrl: 'products/products.html',
+                controller: 'productsController'
+            })
+            .when('/cart', {
+                templateUrl: 'cart/cart.html',
+                controller: 'cartController'
+            })
+            .when('/orders', {
+                            templateUrl: 'orders/orders.html',
+                            controller: 'orderController'
+                        })
+            .otherwise({
+                redirectTo: '/'
+            });
+    }
+
+    function run($rootScope, $http, $localStorage) {
+        if ($localStorage.marketCurrentUser) {
+            $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.marketCurrentUser.token;
+        }
+    }
+})();
+
+angular.module('app').controller('indexController', function ($scope, $http, $localStorage, $location) {
     const contextPath = 'http://localhost:8189/market';
 
-    $scope.init = function () {
-        $http.get(contextPath + '/api/v1/products')
-            .then(function (response) {
-                $scope.products = response.data;
-            });
-        $http.get(contextPath + '/api/v1/cart')
-                        .then(function (response) {
-                            $scope.cartDto = response.data;
-                        });
-    };
-
-    $scope.createNewProduct = function () {
-        $http.post(contextPath + '/api/v1/products', $scope.newProduct)
+    $scope.tryToAuth = function () {
+        $http.post(contextPath + '/auth', $scope.user)
             .then(function successCallback(response) {
-                $scope.init();
-                $scope.newProduct = null;
+                if (response.data.token) {
+                    $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
+                    $localStorage.currentUser = {username: $scope.user.username, token: response.data.token};
+
+                    $scope.currentUserName = $scope.user.username;
+
+                    $scope.user.username = null;
+                    $scope.user.password = null;
+                }
             }, function errorCallback(response) {
-                console.log(response.data);
-                alert('Error: ' + response.data.messages);
             });
     };
 
-   $scope.addProductToCart = function (productId) {
-            $http({
-                url: contextPath + '/api/v1/cart/add',
-                method: 'GET',
-                params: {
-                    id: productId,
-                    temp: 'empty'
+    $scope.tryToAuth = function () {
+        $http.post(contextPath + '/auth', $scope.user)
+            .then(function successCallback(response) {
+                if (response.data.token) {
+                    $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
+                    $localStorage.aprilMarketCurrentUser = {username: $scope.user.username, token: response.data.token};
+
+                    $scope.user.username = null;
+                    $scope.user.password = null;
                 }
-            }).then(function (response) {
-                $scope.init();
-                console.log("OK");
+            }, function errorCallback(response) {
             });
-        }
-   $scope.order = function (username) {
-            $http({
-                url: contextPath + '/api/v1/cart/order',
-                method: 'GET',
-                params: {
-                    username: username,
-                    temp: 'empty'
-                }
-            }).then(function (response) {
-                $scope.init();
-                console.log("OK");
-            });
-        }
-
-   $scope.showMyOrders = function () {
-                $http({
-                    url: contextPath + '/api/v1/orders',
-                    method: 'GET'
-                }).then(function (response) {
-                    $scope.myOrders = response.data;
-                });
-            };
-
-   $scope.loadCart = function (page) {
-                    $http({
-                        url: '/market/api/v1/cart',
-                        method: 'GET'
-                    }).then(function (response) {
-                        $scope.cartDto = response.data;
-                    });
-                };
-
-   $scope.createOrder = function () {
-                $http.post(contextPath + '/api/v1/orders', $scope.newOrder).then(function successCallback(response) {
-                    $scope.showMyOrders();
-                    $scope.loadCart();
-                    $scope.clearCart();
-                });
-            };
-
-   $scope.saveOrder = function () {
-                     $http.post(contextPath + '/api/v1/orders', $scope.newOrder).then(function successCallback(response){
-                     console.log("Заказ сохранен")
-                     $scope.clearCart();
-                            });
-                        };
-
-   $scope.tryToAuth = function () {
-           $http.post(contextPath + '/auth', $scope.user)
-               .then(function successCallback(response) {
-                   if (response.data.token) {
-                       $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
-                       $localStorage.aprilMarketCurrentUser = {username: $scope.user.username, token: response.data.token};
-
-                       $scope.user.username = null;
-                       $scope.user.password = null;
-
-                       $scope.whoAmI();
-                   }
-               }, function errorCallback(response) {
-               });
-       };
+    };
 
     $scope.tryToLogout = function () {
-            $scope.clearUser();
-        };
+        $scope.clearUser();
+    };
 
-        $scope.clearUser = function () {
-                delete $localStorage.aprilMarketCurrentUser;
-                $http.defaults.headers.common.Authorization = '';
-            };
-
+    $scope.clearUser = function () {
+        delete $localStorage.aprilMarketCurrentUser;
+        $http.defaults.headers.common.Authorization = '';
+    };
 
     $scope.isUserLoggedIn = function () {
         if ($localStorage.aprilMarketCurrentUser) {
@@ -115,41 +84,14 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
         } else {
             return false;
         }
-        };
-
-
+    };
     $scope.registrationUser = function(){
-                $http.post(contextPath + '/api/v1/users', $scope.newUser)
-                .then(function successCallback(response) {
-                $scope.newUser = null;
-                }, function errorCallback(response) {
-                console.log(response.data);
-                alert('Error: ' + response.data.messages);
-             });
-     };
-
-     $scope.clearCart = function (){
-      $http({
-                 url: contextPath + '/api/v1/cart/clear',
-                 method: 'GET',
-                 params: {
-                     temp: 'empty'
-                 }
-             }).then(function (response) {
-                 $scope.init();
-                 console.log("OK");
-             });}
-
-      $scope.whoAmI = function () {
-                     $http({
-                         url: contextPath + '/api/v1/users/me',
-                         method: 'GET'
-                     }).then(function (response) {
-                         $scope.userDto=response.data;
-                     });
-                 };
-    if ($localStorage.marketCurrentUser) {
-    $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.marketCurrentUser.token;
-    }
-    $scope.init();
+                    $http.post(contextPath + '/api/v1/users', $scope.newUser)
+                    .then(function successCallback(response) {
+                    $scope.newUser = null;
+                    }, function errorCallback(response) {
+                    console.log(response.data);
+                    alert('Error: ' + response.data.messages);
+                 });
+         };
 });

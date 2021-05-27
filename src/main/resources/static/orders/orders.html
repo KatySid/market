@@ -1,0 +1,40 @@
+<p></p>
+<h4>Мои заказы</h4>
+<div ng-show="isUserLoggedIn()">
+    <p></p>
+    <h4>Оформление заказа</h4>
+    <form class="mb3" ng-submit="saveOrder()">
+        <input class="form-contol" ng-model="newOrder.adress" type="text" placeholder="Адрес доставки" aria-label="Adress" name="adress">
+        <p></p>
+        <input class="form-contol" ng-model="newOrder.phoneNumber" type="text" placeholder="Телефон" aria-label="Phone" name="phoneNumber">
+    </form>
+    <button type="button" ng-click="createOrder()" class="btn btn-primary" ng-if="cartDto.items.length > 0">Оформить заказ</button>
+    <p></p>
+    <h4>Мои заказы</h4>
+    <span ng-if="myOrders.length == 0">Вы пока не сделали ни одного заказа</span>
+    <table class="table" ng-if="myOrders.length > 0">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Описание</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Адрес</th>
+            <th scope="col">Телефон</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="order in myOrders">
+            <td>{{order.id}}</td>
+            <td>{{order.description}}</td>
+            <td>{{order.price}}</td>
+            <td>{{order.adress}}</td>
+            <td>{{order.phoneNumber}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div ng-show="isUserLoggedIn()">
+    <p></p>
+    <h4>Оформление заказа</h4>
+    <button ng-click="createOrder()" class="btn btn-primary" ng-show="cartDto.items.length > 0">Оформить заказ</button>
+</div>
