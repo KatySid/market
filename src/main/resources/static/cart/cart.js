@@ -27,15 +27,7 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
         }
     };
 
-    $scope.createOrder = function () {
-        $http({
-            url: contextPath + '/api/v1/orders',
-            method: 'POST'
-        }).then(function (response) {
-            $scope.loadCart();
-        });
-    };
-     $scope.saveOrder = function () {
+    $scope.saveOrder = function () {
                          $http.post(contextPath + '/api/v1/orders', $scope.newOrder).then(function successCallback(response){
                          console.log("Заказ сохранен")
                          $scope.clearCart();

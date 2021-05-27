@@ -32,5 +32,5 @@ angular.module('app').controller('orderController', function ($scope, $http, $lo
     if ($scope.isUserLoggedIn()) {
         $scope.showMyOrders();
     }
-    $scope.loadCart();
+
 });

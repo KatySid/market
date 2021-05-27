@@ -32,6 +32,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#!/orders">Мои заказы</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="api/v1/statistic">Статистика</a>
+                    </li>
                     <li class="nav-item" ng-show="!isUserLoggedIn()">
                         <form class="align-middle" ng-submit="tryToAuth()">
                             <div class="input-group-prepend">
@@ -48,7 +51,7 @@
                         </form>
                     </li>
                     <li class="nav-item" ng-show="isUserLoggedIn()">
-                        <button class="btn btn-outline-secondary">{{userDto.username}}</button>
+                        <button class="btn btn-outline-secondary" ng-click="whoAmI()">{{userDto.username}}</button>
                         <button class="btn btn-outline-secondary" ng-click="tryToLogout()">Выйти</button>
                     </li>
                     <li class="nav-item" ng-show="!isUserLoggedIn()">
