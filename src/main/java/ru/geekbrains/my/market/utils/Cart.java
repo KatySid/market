@@ -41,6 +41,29 @@ public class Cart implements Serializable {
         recalculate();
     }
 
+    public void deleteProductFromCart(Product product){
+        for(OrderItem oi: items){
+            if(oi.getProduct().equals(product)){
+                oi.decrementQuantity();
+                if (oi.getQuantity()==0){
+                    deleteAllByProduct(product);
+                }
+                recalculate();
+                return;
+            }
+        }
+    }
+
+    public void deleteAllByProduct(Product product){
+        for(OrderItem oi: items){
+            if(oi.getProduct().equals(product)){
+                items.remove(oi);
+                recalculate();
+                return;
+            }
+        }
+    }
+
     public void clear () {
         items.clear();
     }

@@ -17,4 +17,14 @@ public class CartService {
         cart.addProductToCart(product);
     }
 
+    public void deleteProductFromCart(Long id){
+        Product product = productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product doesn't exist "));
+        cart.deleteProductFromCart(product);
+    }
+
+    public void deleteAllByProduct(Long id){
+        Product product = productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product doesn't exist "));
+        cart.deleteAllByProduct(product);
+    }
+
 }

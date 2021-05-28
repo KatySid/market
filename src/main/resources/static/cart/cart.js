@@ -27,6 +27,26 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
         }
     };
 
+    $scope.decProductQuantity = function(productId){
+    $http({
+                url: contextPath + '/api/v1/cart/decrement',
+                method: 'GET',
+                param: productId
+            }).then(function (response) {
+                $scope.loadCart();
+            });
+    };
+
+    $scope.incProductQuantity = function(productId){
+    $http({
+                url: contextPath + '/api/v1/cart/increment',
+                method: 'GET',
+                param: productId
+            }).then(function (response) {
+                $scope.loadCart();
+            });
+    };
+
     $scope.saveOrder = function () {
                          $http.post(contextPath + '/api/v1/orders', $scope.newOrder).then(function successCallback(response){
                          console.log("Заказ сохранен")

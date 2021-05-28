@@ -19,7 +19,6 @@ public class CartController {
 
     @GetMapping("/add/{id}")
     public void addProduct(@PathVariable Long id) {
-        log.info("add: " + id);
         cartService.addProductToCart(id);
     }
 
@@ -30,8 +29,22 @@ public class CartController {
 
     @GetMapping("/clear")
     public void clearCart() {
-        log.info("clear cart");
         cart.clear();
+    }
+
+    @GetMapping("/delete/{id}")
+    public void deleteAllByProduct(@PathVariable Long id) {
+        cartService.deleteAllByProduct(id);
+    }
+
+    @GetMapping("/decrement/{id}")
+    public void deleteProductFromCart(@PathVariable Long id) {
+        cartService.deleteProductFromCart(id);
+    }
+
+    @GetMapping("/increment/{id}")
+    public void incrementProductQuantity(@PathVariable Long id) {
+        cartService.addProductToCart(id);
     }
 
 }

@@ -12,8 +12,9 @@
     <tr ng-repeat="oi in cartDto.items">
         <td>{{oi.productTitle}}</td>
         <td>
+            <button class="btn btn-primary" ng-click="decProductQuantity(oi.productId)">-</button>
             {{oi.quantity}}
-            <button class="btn btn-primary" ng-click="addProductToCart(oi.productId)">+</button>
+            <button class="btn btn-primary" ng-click="incProductQuantity(oi.productId)">+</button>
         </td>
         <td>{{oi.pricePerProduct + ' x ' + oi.quantity + ' = ' + oi.price}}</td>
     </tr>
