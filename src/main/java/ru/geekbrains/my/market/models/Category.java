@@ -1,11 +1,16 @@
 package ru.geekbrains.my.market.models;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "categories")
-public class Category {
+public class Category implements Serializable {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,6 +19,14 @@ public class Category {
 
         @Column(name = "title")
         private String title;
+
+        @Column (name ="created_at")
+        @CreationTimestamp
+        private LocalDateTime createdAt;
+
+        @Column (name ="updated_at")
+        @UpdateTimestamp
+        private LocalDateTime updatedAt;
 
         @OneToMany(mappedBy = "category")
         private List<Product> products;

@@ -1,17 +1,27 @@
 package ru.geekbrains.my.market.utils;
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
+import ru.geekbrains.my.market.models.OrderItem;
 import ru.geekbrains.my.market.models.Product;
-
 import javax.annotation.PostConstruct;
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 @Component
-public class Cart {
-    private List<Product> items;
+@RequiredArgsConstructor
+@Data
+@Scope (value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
+public class Cart implements Serializable {
+    private List<OrderItem> items;
+    private BigDecimal sum;
 
     @PostConstruct
     public void init(){
@@ -20,27 +30,30 @@ public class Cart {
     }
 
     public void addProductToCart(Product product){
-        items.add(product);
-    }
-
-    public void deleteProduct (Product product){
-        Product p = null;
-        for (int i = 0; i < items.size(); i++) {
-            if(product.getId()==items.get(i).getId()){
-                p=items.get(i);
-                break;
+        for(OrderItem oi: items){
+            if(oi.getProduct().equals(product)){
+                oi.incrementQuantity();
+                recalculate();
+                return;
             }
         }
-        if(p!=null){
-            items.remove(p);
-        }
+        items.add(new OrderItem(product));
+        recalculate();
     }
 
     public void clear () {
         items.clear();
     }
 
-    public List<Product> getAllItems(){
+    private void recalculate() {
+        sum = BigDecimal.ZERO;
+        for (OrderItem oi : items) {
+            sum = sum.add(oi.getPrice());
+        }
+    }
+
+    public List<OrderItem> getAllItems(){
         return Collections.unmodifiableList(items);
     }
+
 }

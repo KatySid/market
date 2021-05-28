@@ -2,13 +2,15 @@ package ru.geekbrains.my.market.dtos;
 import ru.geekbrains.my.market.utils.Cart;
 
 import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class CartDto {
-    private List<ProductDto> items;
+    private List<OrderItemDto> items;
+    private BigDecimal sum;
 
     @PostConstruct
     public void init(){
@@ -17,10 +19,15 @@ public class CartDto {
     }
 
     public CartDto (Cart cart){
-        this.items = cart.getAllItems().stream().map(ProductDto :: new).collect(Collectors.toList());
+        this.items = cart.getAllItems().stream().map(OrderItemDto :: new).collect(Collectors.toList());
+        this.sum = cart.getSum();
     }
 
-    public List<ProductDto> getItems(){
+    public List<OrderItemDto> getItems(){
         return Collections.unmodifiableList(items);
+    }
+
+    public BigDecimal getSum(){
+        return sum;
     }
 }
