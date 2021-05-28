@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.my.market.dtos.CartDto;
+import ru.geekbrains.my.market.services.CartService;
 import ru.geekbrains.my.market.utils.Cart;
 
 @RestController
@@ -13,12 +14,13 @@ import ru.geekbrains.my.market.utils.Cart;
 
 public class CartController {
     private final Cart cart;
+    private final CartService cartService;
 
 
     @GetMapping("/add/{id}")
     public void addProduct(@PathVariable Long id) {
         log.info("add: " + id);
-        cart.addProductToCart(id);
+        cartService.addProductToCart(id);
     }
 
     @GetMapping
