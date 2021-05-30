@@ -56,7 +56,7 @@ public class Cart implements Serializable {
 
     public void deleteAllByProduct(Product product){
         for(OrderItem oi: items){
-            if(oi.getProduct().equals(product)){
+            if(oi.getProduct().getId().equals(product.getId())){
                 items.remove(oi);
                 recalculate();
                 return;

@@ -12,11 +12,14 @@
     <tr ng-repeat="oi in cartDto.items">
         <td>{{oi.productTitle}}</td>
         <td>
-            <button class="btn btn-sm btn-outline-primary" ng-click="deleteFromCart(oi.productId)">-</button>
+            <button class="btn btn-sm btn-outline-primary" ng-click="decProductFromCart(oi.productId)">-</button>
             {{oi.quantity}}
             <button class="btn btn-sm btn-outline-primary" ng-click="addProductToCart(oi.productId)">+</button>
         </td>
         <td>{{oi.pricePerProduct + ' x ' + oi.quantity + ' = ' + oi.price}}</td>
+        <td>
+            <button class="btn btn-sm btn-outline-primary" ng-click="deleteProductFromCart(oi.productId)">Удалить из корзины</button>
+        </td>
     </tr>
     <tr style="font-weight: bold">
         <td>Итого</td>

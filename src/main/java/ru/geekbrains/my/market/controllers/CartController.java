@@ -27,11 +27,10 @@ public class CartController {
         cartService.deleteProductFromCart(id);
     }
 
-//    @GetMapping("/add/{productId}")
-//    public void addToCart(@PathVariable(name = "productId") Long id) {
-//        Optional<Product> product = productService.findById(id);
-//        cartService.addToCart(id);
-//    }
+    @GetMapping("/deleteAll/{productId}")
+    public void deleteAllProductById(@PathVariable (name = "productId") Long id) {
+        cartService.deleteAllByProduct(id);
+    }
 
     @GetMapping
     public CartDto getCart(){
@@ -41,25 +40,6 @@ public class CartController {
     @GetMapping("/clear")
     public void clearCart() {
         cart.clear();
-    }
-
-//    @GetMapping("/delete/{id}")
-//    public void deleteAllByProduct(@PathVariable Long id) {
-//        cartService.deleteAllByProduct(id);
-//    }
-
-
-
-
-
-    @GetMapping("/decrement")
-    public void deleteProductFromCart(@RequestParam Long id) {
-        cartService.deleteProductFromCart(id);
-    }
-
-    @GetMapping("/increment")
-    public void incrementProductQuantity(@RequestParam Long id) {
-        cartService.addProductToCart(id);
     }
 
 }
