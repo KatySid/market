@@ -44,4 +44,5 @@ public class Product implements Serializable {
     public String toString() {
         return String.format("Product [id = %d, title = %s, price = %d, category = %s]", id, title, price, category.getTitle());
     }
+
 }

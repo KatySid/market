@@ -17,10 +17,21 @@ public class CartController {
     private final CartService cartService;
 
 
-    @GetMapping("/add/{id}")
-    public void addProduct(@PathVariable Long id) {
+    @GetMapping("/add/{productId}")
+    public void addProductToCart(@PathVariable (name = "productId") Long id) {
         cartService.addProductToCart(id);
     }
+
+    @GetMapping("/delete/{productId}")
+    public void deleteOneProductById(@PathVariable (name = "productId") Long id) {
+        cartService.deleteProductFromCart(id);
+    }
+
+//    @GetMapping("/add/{productId}")
+//    public void addToCart(@PathVariable(name = "productId") Long id) {
+//        Optional<Product> product = productService.findById(id);
+//        cartService.addToCart(id);
+//    }
 
     @GetMapping
     public CartDto getCart(){
@@ -32,18 +43,22 @@ public class CartController {
         cart.clear();
     }
 
-    @GetMapping("/delete/{id}")
-    public void deleteAllByProduct(@PathVariable Long id) {
-        cartService.deleteAllByProduct(id);
-    }
+//    @GetMapping("/delete/{id}")
+//    public void deleteAllByProduct(@PathVariable Long id) {
+//        cartService.deleteAllByProduct(id);
+//    }
 
-    @GetMapping("/decrement/{id}")
-    public void deleteProductFromCart(@PathVariable Long id) {
+
+
+
+
+    @GetMapping("/decrement")
+    public void deleteProductFromCart(@RequestParam Long id) {
         cartService.deleteProductFromCart(id);
     }
 
-    @GetMapping("/increment/{id}")
-    public void incrementProductQuantity(@PathVariable Long id) {
+    @GetMapping("/increment")
+    public void incrementProductQuantity(@RequestParam Long id) {
         cartService.addProductToCart(id);
     }
 

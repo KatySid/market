@@ -25,27 +25,63 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
         } else {
             return false;
         }
-    };
+    }
 
-    $scope.decProductQuantity = function(productId){
-    $http({
-                url: contextPath + '/api/v1/cart/decrement',
-                method: 'GET',
-                param: productId
+
+    $scope.addProductToCart = function (productId) {
+            $http({
+                url: contextPath + '/api/v1/cart/add/' + productId,
+                method: 'GET'
             }).then(function (response) {
                 $scope.loadCart();
             });
-    };
+        }
 
-    $scope.incProductQuantity = function(productId){
-    $http({
-                url: contextPath + '/api/v1/cart/increment',
-                method: 'GET',
-                param: productId
+        $scope.deleteFromCart = function (productId) {
+            $http({
+            url: contextPath + '/api/v1/cart/delete/'+ productId,
+            method: 'GET',
             }).then(function (response) {
-                $scope.loadCart();
+            $scope.loadCart();
             });
-    };
+        }
+
+
+//    $scope.decProductQuantity = function(productId){
+//    $http({
+//                url: contextPath + '/api/v1/cart/decrement',
+//                method: 'GET',
+//                params: {id: productId,
+//                           temp: 'empty'}
+//            }).then(function (response) {
+//                $scope.loadCart();
+//            });
+//    };
+
+
+
+//    $scope.deleteFromCart = function (productId) {
+//            $http({
+//                url: contextPath + '/api/v1/cart/delete',
+//                method: 'GET',
+//                params: {
+//                    id: productId
+//                }
+//            }).then(function (response) {
+//                $scope.loadCart();
+//            });
+//        }
+
+//    $scope.incProductQuantity = function(productId){
+//    $http({
+//                url: contextPath + '/api/v1/cart/increment',
+//                method: 'GET',
+//                params: { id: productId,
+//                          temp: 'empty'}
+//            }).then(function (response) {
+//                $scope.loadCart();
+//            });
+//    };
 
     $scope.saveOrder = function () {
                          $http.post(contextPath + '/api/v1/orders', $scope.newOrder).then(function successCallback(response){

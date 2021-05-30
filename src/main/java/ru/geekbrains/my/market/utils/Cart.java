@@ -31,7 +31,7 @@ public class Cart implements Serializable {
 
     public void addProductToCart(Product product){
         for(OrderItem oi: items){
-            if(oi.getProduct().equals(product)){
+            if(oi.getProduct().getId().equals(product.getId())){
                 oi.incrementQuantity();
                 recalculate();
                 return;
@@ -43,7 +43,7 @@ public class Cart implements Serializable {
 
     public void deleteProductFromCart(Product product){
         for(OrderItem oi: items){
-            if(oi.getProduct().equals(product)){
+            if(oi.getProduct().getId().equals(product.getId())){
                 oi.decrementQuantity();
                 if (oi.getQuantity()==0){
                     deleteAllByProduct(product);
