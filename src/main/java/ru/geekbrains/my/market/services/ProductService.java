@@ -3,6 +3,7 @@ package ru.geekbrains.my.market.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,8 +35,11 @@ public class ProductService {
         return new ProductDto(product);
     }
 
-    public Page<Product> findPage(int page, int pageSize) {
-        return productRepository.findAllBy(PageRequest.of(page, pageSize));
+    public Page<ProductDto> findPage(Specification<Product> spec, int page, int pageSize){
+
+        return productRepository.findAll(spec, PageRequest.of(page - 1, pageSize)).map(ProductDto::new);
+
+        //return productRepository.findAllBy(PageRequest.of(page, pageSize));
     }
 
     public List<Product> findAll(){
