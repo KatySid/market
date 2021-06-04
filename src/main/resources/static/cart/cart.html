@@ -1,0 +1,44 @@
+<p></p>
+<h4>Корзина</h4>
+<table class="table" ng-show="cartDto.items.length > 0">
+    <thead>
+    <tr>
+        <th scope="col">Название</th>
+        <th scope="col">Количество</th>
+        <th scope="col">Цена</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="oi in cartDto.items">
+        <td>{{oi.productTitle}}</td>
+        <td>
+            <button class="btn btn-sm btn-outline-primary" ng-click="decProductFromCart(oi.productId)">-</button>
+            {{oi.quantity}}
+            <button class="btn btn-sm btn-outline-primary" ng-click="addProductToCart(oi.productId)">+</button>
+        </td>
+        <td>{{oi.pricePerProduct + ' x ' + oi.quantity + ' = ' + oi.price}}</td>
+        <td>
+            <button class="btn btn-sm btn-outline-primary" ng-click="deleteProductFromCart(oi.productId)">Удалить из корзины</button>
+        </td>
+    </tr>
+    <tr style="font-weight: bold">
+        <td>Итого</td>
+        <td></td>
+        <td>{{cartDto.sum + ' руб.'}}</td>
+    </tr>
+    </tbody>
+</table>
+<span ng-if="cartDto.items.length == 0">Ваша корзина пуста</span>
+<button ng-click="clearCart()" class="btn btn-primary" ng-if="cartDto.items.length > 0">Очистить корзину</button>
+
+<div ng-show="isUserLoggedIn()">
+    <p></p>
+    <h4>Оформление заказа</h4>
+    <form class="mb3">
+        <input class="form-contol" ng-model="newOrder.adress" type="text" placeholder="Адрес доставки" aria-label="Adress" name="adress">
+        <p></p>
+        <input class="form-contol" ng-model="newOrder.phoneNumber" type="text" placeholder="Телефон" aria-label="Phone" name="phoneNumber">
+        <button ng-click="saveOrder()" class="btn btn-primary" ng-show="cartDto.items.length > 0">Оформить заказ</button>
+    </form>
+
+</div>
