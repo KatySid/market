@@ -14,7 +14,6 @@ import ru.geekbrains.my.market.error_handling.ResourceNotFoundException;
 import ru.geekbrains.my.market.models.Category;
 import ru.geekbrains.my.market.models.Product;
 import ru.geekbrains.my.market.repositories.ProductRepository;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +38,6 @@ public class ProductService {
 
         return productRepository.findAll(spec, PageRequest.of(page - 1, pageSize)).map(ProductDto::new);
 
-        //return productRepository.findAllBy(PageRequest.of(page, pageSize));
     }
 
     public List<Product> findAll(){
