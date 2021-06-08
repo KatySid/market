@@ -13,7 +13,6 @@ import ru.geekbrains.my.market.utils.Cart;
 @Slf4j
 
 public class CartController {
-    private final Cart cart;
     private final CartService cartService;
 
 
@@ -34,12 +33,12 @@ public class CartController {
 
     @GetMapping
     public CartDto getCart(){
-        return  new CartDto(cart);
+        return  cartService.getCartDto();
     }
 
     @GetMapping("/clear")
     public void clearCart() {
-        cart.clear();
+        cartService.clearCart();
     }
 
 }
