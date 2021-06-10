@@ -26,6 +26,7 @@ public class Cart implements Serializable {
     @PostConstruct
     public void init(){
         items = new ArrayList<>();
+        sum = BigDecimal.ZERO;
 
     }
 
