@@ -14,6 +14,9 @@ public class CartService {
     private final Cart cart;
 
     public void addProductToCart(Long id) {
+        if(cart.addToCart(id)){
+            return;
+        }
         Product product = productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product doesn't exist "));
         cart.addProductToCart(product);
     }

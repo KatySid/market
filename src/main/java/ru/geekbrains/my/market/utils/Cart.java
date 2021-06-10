@@ -29,14 +29,19 @@ public class Cart implements Serializable {
 
     }
 
-    public void addProductToCart(Product product){
-        for(OrderItem oi: items){
-            if(oi.getProduct().getId().equals(product.getId())){
+    public boolean addToCart(Long id){
+        for(OrderItem oi: items) {
+            if (oi.getProduct().getId().equals(id)) {
                 oi.incrementQuantity();
                 recalculate();
-                return;
+                return true;
             }
         }
+        return false;
+
+    }
+
+    public void addProductToCart(Product product){
         items.add(new OrderItem(product));
         recalculate();
     }
