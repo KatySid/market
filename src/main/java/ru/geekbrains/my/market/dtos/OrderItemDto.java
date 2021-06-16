@@ -30,4 +30,21 @@ public class OrderItemDto {
         this.price = orderItem.getPrice();
     }
 
+    public OrderItemDto (Product product){
+        this.productId = product.getId();
+        this.productTitle = product.getTitle();
+        this.quantity = 1;
+        this.pricePerProduct = product.getPrice();
+        this.price = product.getPrice();
+    }
+    public void incrementQuantity(){
+        this.quantity++;
+        this.price = this.pricePerProduct.multiply(BigDecimal.valueOf(this.quantity));
+    }
+
+    public void decrementQuantity(){
+        this.quantity--;
+        this.price = this.pricePerProduct.multiply(BigDecimal.valueOf(this.quantity));
+    }
+
 }

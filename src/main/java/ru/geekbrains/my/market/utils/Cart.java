@@ -1,38 +1,27 @@
 package ru.geekbrains.my.market.utils;
 
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.WebApplicationContext;
+import ru.geekbrains.my.market.dtos.OrderItemDto;
 import ru.geekbrains.my.market.models.OrderItem;
 import ru.geekbrains.my.market.models.Product;
-import javax.annotation.PostConstruct;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-@Component
-@RequiredArgsConstructor
 @Data
-@Scope (value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class Cart implements Serializable {
-    private List<OrderItem> items;
+public class Cart {
+    private List<OrderItemDto> items;
     private BigDecimal sum;
 
-    @PostConstruct
-    public void init(){
+    public Cart(){
         items = new ArrayList<>();
         sum = BigDecimal.ZERO;
 
     }
 
     public boolean addToCart(Long id){
-        for(OrderItem oi: items) {
-            if (oi.getProduct().getId().equals(id)) {
+        for(OrderItemDto oi: items) {
+            if (oi.getProductId().equals(id)) {
                 oi.incrementQuantity();
                 recalculate();
                 return true;
@@ -43,13 +32,13 @@ public class Cart implements Serializable {
     }
 
     public void addProductToCart(Product product){
-        items.add(new OrderItem(product));
+        items.add(new OrderItemDto(product));
         recalculate();
     }
 
     public void deleteProductFromCart(Product product){
-        for(OrderItem oi: items){
-            if(oi.getProduct().getId().equals(product.getId())){
+        for(OrderItemDto oi: items){
+            if(oi.getProductId().equals(product.getId())){
                 oi.decrementQuantity();
                 if (oi.getQuantity()==0){
                     deleteAllByProduct(product);
@@ -61,8 +50,8 @@ public class Cart implements Serializable {
     }
 
     public void deleteAllByProduct(Product product){
-        for(OrderItem oi: items){
-            if(oi.getProduct().getId().equals(product.getId())){
+        for(OrderItemDto oi: items){
+            if(oi.getProductId().equals(product.getId())){
                 items.remove(oi);
                 recalculate();
                 return;
@@ -76,13 +65,11 @@ public class Cart implements Serializable {
 
     private void recalculate() {
         sum = BigDecimal.ZERO;
-        for (OrderItem oi : items) {
+        for (OrderItemDto oi : items) {
             sum = sum.add(oi.getPrice());
         }
     }
 
-    public List<OrderItem> getAllItems(){
-        return Collections.unmodifiableList(items);
-    }
+
 
 }

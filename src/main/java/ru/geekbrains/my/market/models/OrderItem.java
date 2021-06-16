@@ -4,11 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.ManyToAny;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -17,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "order_items")
-public class OrderItem implements Serializable {
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -55,21 +52,5 @@ public class OrderItem implements Serializable {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public OrderItem (Product product){
-        this.product = product;
-        this.quantity = 1;
-        this.pricePerProduct = product.getPrice();
-        this.price = product.getPrice();
-    }
-
-    public void incrementQuantity(){
-        this.quantity++;
-        this.price = this.pricePerProduct.multiply(new BigDecimal(this.quantity));
-    }
-
-    public void decrementQuantity(){
-        this.quantity--;
-        this.price = this.pricePerProduct.multiply(new BigDecimal(this.quantity));
-    }
 
 }

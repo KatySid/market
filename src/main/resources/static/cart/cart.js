@@ -4,7 +4,10 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
     $scope.loadCart = function () {
         $http({
             url: contextPath + '/api/v1/cart',
-            method: 'GET'
+            method: 'GET',
+            params: {
+                     cartName: 'cart'
+            }
         }).then(function (response) {
             $scope.cartDto = response.data;
         });
@@ -13,7 +16,10 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
     $scope.clearCart = function () {
         $http({
             url: contextPath + '/api/v1/cart/clear',
-            method: 'GET'
+            method: 'GET',
+            params: {
+                            cartName: 'cart'
+                        }
         }).then(function (response) {
             $scope.loadCart();
         });
@@ -29,8 +35,12 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
 
     $scope.addProductToCart = function (productId) {
             $http({
-                url: contextPath + '/api/v1/cart/add/' + productId,
-                method: 'GET'
+                url: contextPath + '/api/v1/cart/add/',
+                method: 'GET',
+                params: {
+                         prodId: productId,
+                         cartName: 'cart'
+                }
             }).then(function (response) {
                 $scope.loadCart();
             });
@@ -38,8 +48,12 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
 
     $scope.decProductFromCart = function (productId) {
             $http({
-            url: contextPath + '/api/v1/cart/delete/'+ productId,
+            url: contextPath + '/api/v1/cart/delete/',
             method: 'GET',
+            params: {
+                     prodId: productId,
+                     cartName: 'cart'
+                     }
             }).then(function (response) {
             $scope.loadCart();
             });
@@ -47,8 +61,12 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
 
     $scope.deleteProductFromCart = function (productId){
             $http({
-                url: contextPath + '/api/v1/cart/deleteAll/'+ productId,
+                url: contextPath + '/api/v1/cart/deleteAll/',
                 method: 'GET',
+                params: {
+                         prodId: productId,
+                         cartName: 'cart'
+                         }
                 }).then(function (response) {
                 $scope.loadCart();
                 });

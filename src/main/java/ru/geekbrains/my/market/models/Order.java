@@ -1,22 +1,18 @@
 package ru.geekbrains.my.market.models;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import ru.geekbrains.my.market.utils.Cart;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Data
 @Table(name = "orders")
-@NoArgsConstructor
 public class Order {
 
     @Id
@@ -48,4 +44,9 @@ public class Order {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public Order() {
+        this.items = new ArrayList<>();
+        this.price = BigDecimal.ZERO;
+    }
 }
