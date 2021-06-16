@@ -40,6 +40,8 @@ public class OrderService {
     public Order createOrderForCurrentUser(User user, String adress, String phone) {
         Order order = new Order();
         order.setUser(user);
+        order.setPhoneNumber(phone);
+        order.setAdress(adress);
         Cart cart = cartService.getCurrentCart("cart"); // todo ERROR
         order.setPrice(cart.getSum());
         order.setItems(new ArrayList<>());
@@ -51,6 +53,8 @@ public class OrderService {
             orderItem.setPricePerProduct(o.getPricePerProduct());
             orderItem.setPrice(o.getPrice());
             orderItem.setProduct(productService.findById(o.getProductId()).get());
+            orderItem.setAdress(adress);
+            orderItem.setPhoneNumber(phone);
         }
         order = orderRepository.save(order);
         cart.clear();
