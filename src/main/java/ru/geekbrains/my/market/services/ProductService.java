@@ -48,6 +48,10 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
+    public Optional<Product> findOneByTitle(String title){
+        return productRepository.findOneByTitle(title);
+    }
+
     public Product save(Product product){
         return productRepository.save(product);
     }

@@ -7,8 +7,12 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 import ru.geekbrains.my.market.models.Product;
 
+import java.util.Optional;
+
 @Repository
 public interface ProductRepository extends JpaRepository <Product, Long>, JpaSpecificationExecutor<Product> {
 
     Page<Product> findAllBy(Pageable pageable);
+
+    Optional<Product> findOneByTitle(String title);
 }
