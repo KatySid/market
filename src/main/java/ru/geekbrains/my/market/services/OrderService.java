@@ -53,8 +53,6 @@ public class OrderService {
             orderItem.setPricePerProduct(o.getPricePerProduct());
             orderItem.setPrice(o.getPrice());
             orderItem.setProduct(productService.findById(o.getProductId()).get());
-            orderItem.setAdress(adress);
-            orderItem.setPhoneNumber(phone);
         }
         order = orderRepository.save(order);
         cart.clear();

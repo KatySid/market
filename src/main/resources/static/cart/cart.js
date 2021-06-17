@@ -26,7 +26,7 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
     }
 
     $scope.isUserLoggedIn = function () {
-        if ($localStorage.aprilMarketCurrentUser) {
+        if ($localStorage.marketCurrentUser) {
             return true;
         } else {
             return false;

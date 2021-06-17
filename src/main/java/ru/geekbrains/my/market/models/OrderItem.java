@@ -33,12 +33,6 @@ public class OrderItem {
     @Column (name = "price")
     private BigDecimal price;
 
-    @Column(name = "adress")
-    private String adress;
-
-    @Column(name = "phone_Number")
-    private String phoneNumber;
-
     @Column (name ="created_at")
     @CreationTimestamp
     private LocalDateTime createdAt;

@@ -4,20 +4,11 @@ angular.module('app').controller('orderController', function ($scope, $http, $lo
 
 
     $scope.isUserLoggedIn = function () {
-        if ($localStorage.aprilMarketCurrentUser) {
+        if ($localStorage.marketCurrentUser) {
             return true;
         } else {
             return false;
         }
-    };
-
-    $scope.createOrder = function () {
-        $http({
-            url: contextPath + '/api/v1/orders',
-            method: 'POST'
-        }).then(function (response) {
-            $scope.loadCart();
-        });
     };
 
  $scope.showMyOrders = function () {

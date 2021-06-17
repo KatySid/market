@@ -52,7 +52,7 @@ angular.module('app').controller('indexController', function ($scope, $http, $lo
             .then(function successCallback(response) {
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
-                    $localStorage.aprilMarketCurrentUser = {username: $scope.user.username, token: response.data.token};
+                    $localStorage.marketCurrentUser = {username: $scope.user.username, token: response.data.token};
                     $scope.user.username = null;
                     $scope.user.password = null;
                     $scope.whoAmI();
@@ -66,12 +66,12 @@ angular.module('app').controller('indexController', function ($scope, $http, $lo
     };
 
     $scope.clearUser = function () {
-        delete $localStorage.aprilMarketCurrentUser;
+        delete $localStorage.marketCurrentUser;
         $http.defaults.headers.common.Authorization = '';
     };
 
     $scope.isUserLoggedIn = function () {
-        if ($localStorage.aprilMarketCurrentUser) {
+        if ($localStorage.marketCurrentUser) {
             return true;
         } else {
             return false;
