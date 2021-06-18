@@ -21,6 +21,8 @@ CREATE TABLE users_roles (
           primary key (user_id, role_id)
 );
 
+
+
 insert into roles (name)
 values
 ('ROLE_USER'),
@@ -61,7 +63,13 @@ INSERT INTO products (title, price, category_id) VALUES
 ('Dress', 500.35, 2),
 ('Bread1', 25, 1),
 ('Milk1', 80, 1),
-('Dress1', 500, 2);
+('Dress1', 500, 2),
+('Bread2', 25.50, 1),
+('Milk2', 80.56, 1),
+('Dress2', 500.35, 2),
+('Bread3', 25, 1),
+('Milk3', 80, 1),
+('Dress3', 500, 2);
 
 
 
@@ -86,4 +94,14 @@ phone_Number                        varchar(255),
 created_at                          TIMESTAMP DEFAULT current_timestamp,
 updated_at                          TIMESTAMP DEFAULT current_timestamp
 );
+
+CREATE TABLE reviews (
+    id                      bigserial primary key,
+    title                   VARCHAR(255),
+    user_id                 bigint not null references users (id),
+    product_id              bigint not null references products (id),
+    created_at              timestamp default current_timestamp,
+    updated_at              timestamp default current_timestamp
+);
+
 COMMIT;

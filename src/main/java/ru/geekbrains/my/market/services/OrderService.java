@@ -42,7 +42,7 @@ public class OrderService {
         order.setUser(user);
         order.setPhoneNumber(phone);
         order.setAdress(adress);
-        Cart cart = cartService.getCurrentCart("cart"); // todo ERROR
+        Cart cart = cartService.getCurrentCart(user.getUsername()); // todo ERROR
         order.setPrice(cart.getSum());
         order.setItems(new ArrayList<>());
         for (OrderItemDto o : cart.getItems()) {
@@ -56,7 +56,7 @@ public class OrderService {
         }
         order = orderRepository.save(order);
         cart.clear();
-        cartService.save("cart", cart); // todo ERROR
+        cartService.save(user.getUsername(), cart); // todo ERROR
         return order;
     }
 

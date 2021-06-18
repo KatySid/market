@@ -56,4 +56,15 @@ public class CartService {
         return cart;
     }
 
+    public boolean isCartExists(String cartId) {
+        return redisTemplate.hasKey("april_cart_" + cartId);
+    }
+
+    public void merge(String userCartId, String guestCartId) {
+        Cart userCart = getCurrentCart(userCartId);
+        Cart guestCart = getCurrentCart(guestCartId);
+        userCart.merge(guestCart);
+        save(userCartId, userCart);
+        save(guestCartId, guestCart);
+    }
 }

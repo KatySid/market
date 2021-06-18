@@ -1,0 +1,51 @@
+<p></p>
+<h3>Информация о товаре</h3>
+<h5>{{prod.title}}</h5>
+<h5>{{prod.categoryTitle}}</h5>
+<h5>{{prod.price}}</h5>
+<p></p>
+<h3>Отзывы о товаре</h3>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Дата</th>
+        <th scope="col">Имя пользователя</th>
+        <th scope="col">Отзыв</th>
+    </tr>
+    </thead>
+    <tbody>
+    <td></td>
+    <td></td>
+        <td>{{review.title}}</td>
+    </tbody>
+</table>
+
+<div ng-show="isUserLoggedIn()">
+    <p></p>
+    <form class="mb3">
+        <input class="form-contol" ng-model="newComment.comment" type="text" placeholder="Отзыв" aria-label="Comment" name="comment">
+        <button ng-click="saveComment()" class="btn btn-primary" >Отправить отзыв</button>
+    </form>
+
+</div>
+
+<nav aria-label="Page navigation" ng-show = "productsPage.totalPages>1">
+    <ul class="pagination">
+        <li ng-class="productsPage.first ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" ng-click="loadPage(1)">В начало</a>
+        </li>
+
+        <li ng-class="productsPage.first ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" ng-click="loadPage(productsPage.number)">Пред.</a>
+        </li>
+
+        <li ng-class="productsPage.number == pageIndex - 1 ? 'page-item active' : 'page-item'"
+            ng-repeat="pageIndex in paginationArray">
+            <a class="page-link" ng-click="loadPage(pageIndex)">{{pageIndex}}</a>
+        </li>
+
+        <li ng-class="productsPage.last ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" ng-click="loadPage(productsPage.number + 2)">След.</a>
+        </li>
+    </ul>
+</nav>

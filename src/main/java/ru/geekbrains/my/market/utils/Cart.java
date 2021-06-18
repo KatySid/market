@@ -2,7 +2,6 @@ package ru.geekbrains.my.market.utils;
 
 import lombok.Data;
 import ru.geekbrains.my.market.dtos.OrderItemDto;
-import ru.geekbrains.my.market.models.OrderItem;
 import ru.geekbrains.my.market.models.Product;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -70,6 +69,22 @@ public class Cart {
         }
     }
 
-
+    public void merge(Cart another) {
+        for (OrderItemDto anotherItem : another.items) {
+            boolean merged = false;
+            for (OrderItemDto myItem : items) {
+                if (myItem.getProductId().equals(anotherItem.getProductId())) {
+                    myItem.changeQuantity(anotherItem.getQuantity());
+                    merged = true;
+                    break;
+                }
+            }
+            if (!merged) {
+                items.add(anotherItem);
+            }
+        }
+        recalculate();
+        another.clear();
+    }
 
 }
