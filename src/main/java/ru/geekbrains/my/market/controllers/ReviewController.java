@@ -5,17 +5,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.my.market.dtos.ReviewDto;
-import ru.geekbrains.my.market.dtos.UserDto;
 import ru.geekbrains.my.market.models.Product;
 import ru.geekbrains.my.market.models.Review;
-import ru.geekbrains.my.market.models.User;
 import ru.geekbrains.my.market.services.ProductService;
 import ru.geekbrains.my.market.services.ReviewService;
 import ru.geekbrains.my.market.services.UserService;
-
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -28,7 +23,7 @@ public class ReviewController {
     private final ProductService productService;
 
     @GetMapping
-    public Page<ReviewDto> getReviewProduct(@RequestParam Long productId, @RequestParam (name = "p") int page){
+    public Page<ReviewDto> getReviewByProduct(@RequestParam Long productId, @RequestParam (name = "p") int page){
         Product product = productService.findById(productId).get();
         if(page<1){
             page=1;

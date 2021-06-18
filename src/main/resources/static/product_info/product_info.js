@@ -78,6 +78,14 @@ angular.module('app').controller('productInfoController', function ($scope, $htt
             });
     }
 
+    $scope.generatePagesIndexes = function (startPage, endPage) {
+            let arr = [];
+            for (let i = startPage; i < endPage + 1; i++) {
+                arr.push(i);
+            }
+            return arr;
+        }
+
     $scope.loadProduct();
     $scope.loadPageReview(1);
 });

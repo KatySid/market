@@ -2,12 +2,8 @@ package ru.geekbrains.my.market.dtos;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.geekbrains.my.market.models.Product;
 import ru.geekbrains.my.market.models.Review;
 import ru.geekbrains.my.market.models.User;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Data

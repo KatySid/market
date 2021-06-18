@@ -8,7 +8,6 @@ import ru.geekbrains.my.market.dtos.ProductDto;
 import ru.geekbrains.my.market.error_handling.ResourceNotFoundException;
 import ru.geekbrains.my.market.models.Product;
 import ru.geekbrains.my.market.repositories.specification.ProductSpecifications;
-import ru.geekbrains.my.market.services.CategoryService;
 import ru.geekbrains.my.market.services.ProductService;
 
 
@@ -17,7 +16,6 @@ import ru.geekbrains.my.market.services.ProductService;
 @RequestMapping ("/api/v1/products")
 public class ProductController {
     private final ProductService productService;
-    private final CategoryService categoryService;
 
     @GetMapping
     public Page<ProductDto> getAllProducts(@RequestParam MultiValueMap<String, String> params, @RequestParam (name = "p", defaultValue = "1") int page){
@@ -25,10 +23,6 @@ public class ProductController {
             page = 1;
         }
         return productService.findPage(ProductSpecifications.build(params), page, 10);
-
-//        Page<Product> productsPage = productService.findPage(page - 1, 10);
-//        Page<ProductDto> dtoPage = new PageImpl<>(productsPage.getContent().stream().map(ProductDto::new).collect(Collectors.toList()), productsPage.getPageable(), productsPage.getTotalElements());
-//        return dtoPage;
     }
 
     @GetMapping ("/{id}")
