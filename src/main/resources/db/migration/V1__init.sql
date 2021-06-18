@@ -103,5 +103,16 @@ CREATE TABLE reviews (
     created_at              timestamp default current_timestamp,
     updated_at              timestamp default current_timestamp
 );
-
+INSERT INTO reviews (title, user_id, product_id) VALUES
+('Good1', 1, 1),
+('Good2', 2, 1),
+('Good3', 1, 1),
+('Good4', 2, 1),
+('Good5', 1, 1),
+('Good6', 2, 1),
+('Good7', 1, 1),
+('Good8', 2, 1),
+('Good9', 1, 1),
+('Good10', 2, 1),
+('Good11', 1, 1);
 COMMIT;

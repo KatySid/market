@@ -9,16 +9,29 @@ angular.module('app').controller('productInfoController', function ($scope, $htt
                 }).then(function (response) {
                     $scope.prod = response.data;
                 });
+         }
+    $scope.loadReviews = function () {
+            $http({
+                url: contextPath + '/api/v1/reviews/',
+                method: 'GET',
+                params: {
+                productId: $routeParams.productIdParam
+                }
+            }).then(function (response) {
+                $scope.reviews = response.data;
+            });
+        }
 
     $scope.showReviews = function() {
     $http({
-           url: contextPath + '/api/v1/reviews/',
+           url: contextPath + '/api/v1/reviews/'+ $routeParams.productIdParam,
                         method: 'GET'
                     }).then(function (response) {
                         $scope.review = response.data;
+
                     });
     }
-    }
+
     $scope.isUserLoggedIn = function () {
                     if ($localStorage.marketCurrentUser) {
                         return true;
@@ -28,12 +41,17 @@ angular.module('app').controller('productInfoController', function ($scope, $htt
                 }
 
     $scope.saveComment = function () {
-            $http.post(contextPath + '/api/v1/comments', $scope.newComment, $scope.userDto).then(function successCallback(response){
-            console.log("Отзыв  сохранен")
+             $http({
+                            url: contextPath + '/api/v1/reviews',
+                            method: 'POST',
+                            params: {
+                            productId: $routeParams.productIdParam,
+                            comment: $scope.comment
+                            }
             });
     }
 
     $scope.loadProduct();
-    $scope.showReviews();
+    $scope.loadReviews();
 });
 

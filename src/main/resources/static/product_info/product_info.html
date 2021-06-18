@@ -5,7 +5,7 @@
 <h5>{{prod.price}}</h5>
 <p></p>
 <h3>Отзывы о товаре</h3>
-<table class="table">
+<table class="table" ng-show="reviews.length > 0">
     <thead>
     <tr>
         <th scope="col">Дата</th>
@@ -14,16 +14,19 @@
     </tr>
     </thead>
     <tbody>
-    <td></td>
-    <td></td>
-        <td>{{review.title}}</td>
+    <tr ng-repeat="oi in reviews">
+        <td></td>
+        <td>{{oi.userName}}</td>
+        <td>{{oi.title}}</td>
+    </tr>
     </tbody>
 </table>
+<span ng-show="reviews.length == 0">Пока никто не оставил отзыв</span>
 
 <div ng-show="isUserLoggedIn()">
     <p></p>
     <form class="mb3">
-        <input class="form-contol" ng-model="newComment.comment" type="text" placeholder="Отзыв" aria-label="Comment" name="comment">
+        <input class="form-contol" ng-model="comment" type="text" placeholder="Отзыв" aria-label="Comment" name="comment">
         <button ng-click="saveComment()" class="btn btn-primary" >Отправить отзыв</button>
     </form>
 
