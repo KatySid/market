@@ -1,6 +1,8 @@
 package ru.geekbrains.my.market.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.my.market.dtos.ReviewDto;
 import ru.geekbrains.my.market.dtos.UserDto;
@@ -25,30 +27,17 @@ public class ReviewController {
     private final UserService userService;
     private final ProductService productService;
 
-//    @GetMapping
-//    public Review getReview(){
-//        Review review = new Review();
-//        review.setTitle("title");
-//        return review;
-   // }
-
     @GetMapping
-    public List<ReviewDto> getReviewProduct(@RequestParam Long productId){
+    public Page<ReviewDto> getReviewProduct(@RequestParam Long productId, @RequestParam (name = "p") int page){
         Product product = productService.findById(productId).get();
-        return reviewService.findAllByProduct(product).stream().map(ReviewDto::new).collect(Collectors.toList());
+        if(page<1){
+            page=1;
+        }
+        int pageSize = 10;
+        Page<Review> reviewsPage = reviewService.findAllByProduct(product,page, pageSize);
+        Page<ReviewDto> dtoPage = new PageImpl<>(reviewsPage.getContent().stream().map(ReviewDto::new).collect(Collectors.toList()), reviewsPage.getPageable(), reviewsPage.getTotalElements());
+        return dtoPage;
     }
-
-//    @GetMapping
-//    public List<ReviewDto> getReviewsProduct(@RequestParam Long productId){
-//
-////
-////        return reviews;
-//        ;Product product = productService.findById(1l).get()
-////        System.out.println(product.toString());
-//        //List<Review> reviews = reviewService.findAllByProduct(product);
-//
-//        return reviewService.findAllByProduct(product).stream().map(ReviewDto::new).collect(Collectors.toList());
-//    }
 
     @PostMapping
     public void createNewReview(Principal principal, @RequestParam String comment, @RequestParam Long productId) {
@@ -58,11 +47,4 @@ public class ReviewController {
         review.setTitle(comment);
         reviewService.save(review);
     }
-
-//    @GetMapping
-//    @Transactional
-//    public List<OrderDto> getAllOrdersForCurrentUser(Principal principal) {
-//        User user = userService.findByUsername(principal.getName()).get();
-//        return orderService.findAllByUser(user).stream().map(OrderDto::new).collect(Collectors.toList());
-//    }
 }

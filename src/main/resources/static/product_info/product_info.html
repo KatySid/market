@@ -1,11 +1,23 @@
 <p></p>
 <h3>Информация о товаре</h3>
-<h5>{{prod.title}}</h5>
-<h5>{{prod.categoryTitle}}</h5>
-<h5>{{prod.price}}</h5>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Название</th>
+        <th scope="col">Категория</th>
+        <th scope="col">Цена</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+        <td>{{prod.title}}</td>
+        <td>{{prod.categoryTitle}}</td>
+        <td>{{prod.price}}</td>
+    </tbody>
+</table>
 <p></p>
 <h3>Отзывы о товаре</h3>
-<table class="table" ng-show="reviews.length > 0">
+<table class="table">
     <thead>
     <tr>
         <th scope="col">Дата</th>
@@ -14,14 +26,13 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="oi in reviews">
-        <td></td>
+    <tr ng-repeat="oi in reviewsPage.content">
+        <td>{{oi.createdAt}}</td>
         <td>{{oi.userName}}</td>
         <td>{{oi.title}}</td>
     </tr>
     </tbody>
 </table>
-<span ng-show="reviews.length == 0">Пока никто не оставил отзыв</span>
 
 <div ng-show="isUserLoggedIn()">
     <p></p>
@@ -32,23 +43,23 @@
 
 </div>
 
-<nav aria-label="Page navigation" ng-show = "productsPage.totalPages>1">
+<nav aria-label="Page navigation" ng-show = "reviewsPage.totalPages>1">
     <ul class="pagination">
-        <li ng-class="productsPage.first ? 'page-item disabled' : 'page-item'">
-            <a class="page-link" ng-click="loadPage(1)">В начало</a>
+        <li ng-class="reviewsPage.first ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" ng-click="loadPageReview(1)">В начало</a>
         </li>
 
-        <li ng-class="productsPage.first ? 'page-item disabled' : 'page-item'">
-            <a class="page-link" ng-click="loadPage(productsPage.number)">Пред.</a>
+        <li ng-class="reviewsPage.first ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" ng-click="loadPageReview(reviewsPage.number)">Пред.</a>
         </li>
 
-        <li ng-class="productsPage.number == pageIndex - 1 ? 'page-item active' : 'page-item'"
-            ng-repeat="pageIndex in paginationArray">
-            <a class="page-link" ng-click="loadPage(pageIndex)">{{pageIndex}}</a>
+        <li ng-class="reviewsPage.number == pageIndex - 1 ? 'page-item active' : 'page-item'"
+            ng-repeat="pageIndex in paginationArrayReview">
+            <a class="page-link" ng-click="loadPageReview(pageIndex)">{{pageIndex}}</a>
         </li>
 
-        <li ng-class="productsPage.last ? 'page-item disabled' : 'page-item'">
-            <a class="page-link" ng-click="loadPage(productsPage.number + 2)">След.</a>
+        <li ng-class="reviewsPage.last ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" ng-click="loadPageReview(reviewsPage.number + 2)">След.</a>
         </li>
     </ul>
 </nav>

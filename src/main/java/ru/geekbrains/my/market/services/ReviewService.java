@@ -25,8 +25,9 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
    private final UserRepository userRepository;
 
-    public List<Review> findAllByProduct(Product product){
-        return reviewRepository.findAllByProduct(product);
+    public Page<Review> findAllByProduct(Product product, int page, int pageSize){
+        return reviewRepository.findAllByProduct(product, PageRequest.of(page-1,pageSize));
+
     }
 
     @Transactional

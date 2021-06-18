@@ -10,6 +10,8 @@ angular.module('app').controller('productInfoController', function ($scope, $htt
                     $scope.prod = response.data;
                 });
          }
+
+
     $scope.loadReviews = function () {
             $http({
                 url: contextPath + '/api/v1/reviews/',
@@ -21,6 +23,31 @@ angular.module('app').controller('productInfoController', function ($scope, $htt
                 $scope.reviews = response.data;
             });
         }
+
+         $scope.loadPageReview = function (page) {
+                         $http({
+                             url: contextPath + '/api/v1/reviews',
+                             method: 'GET',
+                             params: {
+                                       p: page,
+                                       productId: $routeParams.productIdParam
+                                      }
+                         }).then(function (response) {
+                             $scope.reviewsPage = response.data;
+
+                             let minPageIndex = page - 2;
+                             if (minPageIndex < 1) {
+                                 minPageIndex = 1;
+                             }
+
+                             let maxPageIndex = page + 2;
+                             if (maxPageIndex > $scope.reviewsPage.totalPages) {
+                                 maxPageIndex = $scope.reviewsPage.totalPages;
+                             }
+
+                             $scope.paginationArrayReview = $scope.generatePagesIndexes(minPageIndex, maxPageIndex);
+                         });
+                     };
 
     $scope.showReviews = function() {
     $http({
@@ -52,6 +79,6 @@ angular.module('app').controller('productInfoController', function ($scope, $htt
     }
 
     $scope.loadProduct();
-    $scope.loadReviews();
+    $scope.loadPageReview(1);
 });
 

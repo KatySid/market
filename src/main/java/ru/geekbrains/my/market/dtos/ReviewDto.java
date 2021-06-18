@@ -7,6 +7,8 @@ import ru.geekbrains.my.market.models.Review;
 import ru.geekbrains.my.market.models.User;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @NoArgsConstructor
@@ -14,6 +16,7 @@ public class ReviewDto {
     private  Long id;
     private  String title;
     private String userName;
+    private String createdAt;
 
 
     public ReviewDto(Review review){
@@ -21,5 +24,6 @@ public class ReviewDto {
         this.title = review.getTitle();
         User user = review.getUser();
         this.userName = user.getUsername();
+        this.createdAt = review.getCreatedAt().format(DateTimeFormatter.ofPattern( "uuuu-MM-dd HH:mm:ss" )).replace("T", " ");
     }
 }
