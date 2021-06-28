@@ -1,6 +1,9 @@
 package ru.geekbrains.my.market.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +14,6 @@ import ru.geekbrains.my.market.error_handling.ResourceNotFoundException;
 import ru.geekbrains.my.market.models.Category;
 import ru.geekbrains.my.market.models.Product;
 import ru.geekbrains.my.market.repositories.ProductRepository;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -32,12 +34,22 @@ public class ProductService {
         return new ProductDto(product);
     }
 
+    public Page<ProductDto> findPage(Specification<Product> spec, int page, int pageSize){
+
+        return productRepository.findAll(spec, PageRequest.of(page - 1, pageSize)).map(ProductDto::new);
+
+    }
+
     public List<Product> findAll(){
         return productRepository.findAll();
     }
 
     public Optional<Product> findById(Long id){
         return productRepository.findById(id);
+    }
+
+    public Optional<Product> findOneByTitle(String title){
+        return productRepository.findOneByTitle(title);
     }
 
     public Product save(Product product){
@@ -50,7 +62,7 @@ public class ProductService {
             if(product.getTitle()!=null){
                 p.setTitle(product.getTitle());
             }
-            if (product.getPrice()!=0){
+            if (product.getPrice()!=null){
                 p.setPrice(product.getPrice());
             }
             return  productRepository.save(p);

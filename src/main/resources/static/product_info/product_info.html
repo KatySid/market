@@ -1,0 +1,65 @@
+<p></p>
+<h3>Информация о товаре</h3>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Название</th>
+        <th scope="col">Категория</th>
+        <th scope="col">Цена</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+        <td>{{prod.title}}</td>
+        <td>{{prod.categoryTitle}}</td>
+        <td>{{prod.price}}</td>
+    </tbody>
+</table>
+<p></p>
+<h3>Отзывы о товаре</h3>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Дата</th>
+        <th scope="col">Имя пользователя</th>
+        <th scope="col">Отзыв</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="oi in reviewsPage.content">
+        <td>{{oi.createdAt}}</td>
+        <td>{{oi.userName}}</td>
+        <td>{{oi.title}}</td>
+    </tr>
+    </tbody>
+</table>
+
+<div ng-show="isUserLoggedIn()">
+    <p></p>
+    <form class="mb3">
+        <input class="form-contol" ng-model="comment" type="text" placeholder="Отзыв" aria-label="Comment" name="comment">
+        <button ng-click="saveComment()" class="btn btn-primary" >Отправить отзыв</button>
+    </form>
+
+</div>
+
+<nav aria-label="Page navigation" ng-show = "reviewsPage.totalPages>1">
+    <ul class="pagination">
+        <li ng-class="reviewsPage.first ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" ng-click="loadPageReview(1)">В начало</a>
+        </li>
+
+        <li ng-class="reviewsPage.first ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" ng-click="loadPageReview(reviewsPage.number)">Пред.</a>
+        </li>
+
+        <li ng-class="reviewsPage.number == pageIndex - 1 ? 'page-item active' : 'page-item'"
+            ng-repeat="pageIndex in paginationArrayReview">
+            <a class="page-link" ng-click="loadPageReview(pageIndex)">{{pageIndex}}</a>
+        </li>
+
+        <li ng-class="reviewsPage.last ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" ng-click="loadPageReview(reviewsPage.number + 2)">След.</a>
+        </li>
+    </ul>
+</nav>
